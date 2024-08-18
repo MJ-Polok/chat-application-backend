@@ -1,13 +1,21 @@
+import cors from 'cors'
 import express from "express"
 import dotenv from "dotenv"
 import mongoose from "mongoose"
+import cookieParser from 'cookie-parser'
 
 dotenv.config()
 
 
 const dburi = `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASS}@cluster0.ll8pd.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0`
+
 const app = express()
-const PORT = process.env.PORT || 3000
+
+const PORT = process.env.PORT || 4000
+
+app.use(express.json())
+app.use(cors())
+app.use(cookieParser())
 
 mongoose.connect(dburi)
     .then(() => {
@@ -22,10 +30,10 @@ app.get("/", (req, res) => {
 })
 
 // imports routes
-import authRoutes from "./routers/authRoutes/js"
+import authRoutes from "./routers/authRoutes.js"
 
 app.use('/api/auth', authRoutes)
 
-app.listen(3000, () => {
+app.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}`);
 })

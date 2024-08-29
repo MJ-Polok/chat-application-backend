@@ -32,16 +32,18 @@ app.get("/", (req, res) => {
 // imports routes
 import authRoutes from "./routers/authRoutes.js"
 import messageRoute from "./routers/messageRoute.js"
+import userRoute from "./routers/userRoutes.js"
 
 app.use('/api/auth', authRoutes)
 app.use('/api/messages', messageRoute)
+app.use('/api/users', userRoute)
 
 app.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}`);
 })
 
 // error handler
-app.use((err, req, res, nest) => {
+app.use((err, req, res, next) => {
     const statusCode = err.statusCode || 500
     const message = err.message || "Internal server error"
 

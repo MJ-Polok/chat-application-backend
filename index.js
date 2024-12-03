@@ -3,13 +3,14 @@ import express from "express"
 import dotenv from "dotenv"
 import mongoose from "mongoose"
 import cookieParser from 'cookie-parser'
+import { server, app } from './socket/socket.js'
 
 dotenv.config()
 
 
 const dburi = `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASS}@cluster0.ll8pd.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0`
 
-const app = express()
+// const app = express()
 
 const PORT = process.env.PORT || 4000
 
@@ -38,7 +39,7 @@ app.use('/api/auth', authRoutes)
 app.use('/api/messages', messageRoute)
 app.use('/api/users', userRoute)
 
-app.listen(PORT, () => {
+server.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}`);
 })
 
